@@ -1,0 +1,90 @@
+String voice;
+void setup ()
+{
+  
+String voice;
+Serial.begin(9600); 
+pinMode(8,OUTPUT);
+pinMode(9,OUTPUT);
+}
+
+  
+   
+
+
+
+void loop() 
+{
+  while (Serial.available()){ 
+     delay(10); 
+    char c = Serial.read(); 
+    if (c == '#') {break;} 
+    voice += c; 
+  }
+  if (voice.length() > 0){
+    if(voice == "*red"){
+      Led_red_bright();
+      }
+    else if(voice == "*blue"){
+      Led_blue_bright();
+      }
+      else if (voice == "*light")
+      { 
+        light();
+      }
+      else if (voice=="*play")
+      { 
+        play(); 
+      }
+ 
+    else if(voice == "*stop") {
+     stop_bright();
+    }
+    
+  voice=""; 
+  }
+}
+
+void Led_red_bright()
+{
+  digitalWrite(8, HIGH);
+
+  digitalWrite(9, LOW);
+ 
+}
+  
+void Led_blue_bright()
+{
+  digitalWrite(8, LOW);
+  
+  digitalWrite(9, HIGH);
+  
+}
+
+  
+
+
+void stop_bright()
+{
+ digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+}
+void light()
+{
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+}
+void play()
+{
+ for(int i=0;i<10;i++)
+ {
+  digitalWrite(8 , HIGH);
+  delay(200);
+  digitalWrite(8, LOW);
+  delay(200);
+  digitalWrite(9,HIGH);
+  delay(200);
+  digitalWrite(9,LOW);
+  delay(200);
+ }
+}
